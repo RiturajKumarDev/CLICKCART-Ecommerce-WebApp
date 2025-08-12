@@ -1,0 +1,147 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'login.css' %}">
+<div class="wrapper">
+  <div class="tabs">
+    <button class="tab" onclick="showForm('signup')">SIGN UP</button>
+    <button class="tab active" onclick="showForm('login')">LOGIN</button>
+  </div>
+
+  <div class="form-container">
+    <!-- SIGN UP FORM -->
+    <form id="signupForm" action="{% url 'APP:registration' %}" class="form" method="post">
+      {% csrf_token %}
+      <h2>Create Your Click Cart Account</h2>
+      {% if userStatus %}
+      <p>{{userStatus}}</p>
+      {% endif %}
+      <!-- <button type="button" class="google-btn">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="G">
+        Continue with Google
+      </button>
+      <div class="or-line"><span>OR</span></div> -->
+
+      <label>Full Name *</label>
+      <input type="text" name="fullName" value="{{user.fullName}}" placeholder="Full Name" required />
+
+      <label>Email *</label>
+      <input type="email" name="email" value="{{user.email}}" placeholder="Email" required />
+
+      <label>Phone Number *</label>
+      <input type="tel" name="mobile" value="{{user.mobile}}" placeholder="+91 9876543210" required />
+
+      <label>Password *</label>
+      <div class="password-wrapper">
+        <input type="password" name="password" value="{{user.password}}" id="signupPass" placeholder="Password" required
+          oninput="checkStrength(this.value)" />
+        <span class="toggle" onclick="togglePassword('signupPass')">👁️</span>
+      </div>
+      <div class="strength" id="strengthText"></div>
+
+      <label>Confirm Password *</label>
+      <input type="password" name="confirmpassword" value="{{user.password}}" placeholder="Re-enter Password" required />
+
+      <label class="terms">
+        <input type="checkbox" required /> I agree to <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+      </label>
+
+      <button type="submit" class="submit-btn">REGISTER</button>
+      <!-- <button type="button" class="guest-btn">Continue as Guest</button> -->
+
+      <p class="footer-note">Need help? <a href="mailto:help@clickcart.com">help@clickcart.com</a></p>
+    </form>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" action="{% url 'APP:login' %}" class="form active" method="post">
+      {% csrf_token %}
+      <h2>Welcome Back!</h2>
+      {% if userStatus %}
+      <p>{{userStatus}}</p>
+      {% endif %}
+      <!-- <button type="button" class="google-btn">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="G">
+        Continue with Google
+      </button>
+      <div class="or-line"><span>OR</span></div> -->
+
+      <!-- Toggle login with Email or Phone -->
+      <!-- <div class="login-toggle">
+        <label><input type="radio" name="loginOption" value="email" checked onchange="toggleLoginMethod()">
+          Email</label>
+        <label><input type="radio" name="loginOption" value="phone" onchange="toggleLoginMethod()"> Phone</label>
+      </div> -->
+
+      <!-- Login Input Wrapper (aligned) -->
+      <div class="login-input-wrapper">
+        <div id="emailLogin" class="login-method visible">
+          <label>Email *</label>
+          <input type="text" name="email" placeholder="you@example.com" />
+        </div>
+        <div id="phoneLogin" class="login-method hidden">
+          <label>Phone Number *</label>
+          <input type="tel" name="mobile" placeholder="+91 9876543210" />
+        </div>
+      </div>
+
+      <label>Password *</label>
+      <div class="password-wrapper">
+        <input type="password" name="password" id="loginPass" placeholder="Password" required />
+        <span class="toggle" onclick="togglePassword('loginPass')">👁️</span>
+      </div>
+
+      <label class="remember">
+        <input type="checkbox" /> Remember Me
+      </label>
+
+      <button type="submit" class="submit-btn">LOGIN</button>
+      <!-- <button type="button" class="guest-btn">Continue as Guest</button> -->
+      <p class="footer-note">Forgot password? <a href="#">Reset it</a></p>
+    </form>
+  </div>
+</div>
+
+<script>
+  function showForm(type) {
+    document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(`${type}Form`).classList.add('active');
+    document.querySelector(`.tab[onclick*="${type}"]`).classList.add('active');
+  }
+
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  function checkStrength(password) {
+    const strengthText = document.getElementById('strengthText');
+    const weak = /[a-z]/;
+    const medium = /(?=.*[0-9])(?=.{6,})/;
+    const strong = /(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+    if (strong.test(password)) {
+      strengthText.textContent = 'Strength: Strong';
+      strengthText.style.color = 'green';
+    } else if (medium.test(password)) {
+      strengthText.textContent = 'Strength: Medium';
+      strengthText.style.color = 'orange';
+    } else if (weak.test(password)) {
+      strengthText.textContent = 'Strength: Weak';
+      strengthText.style.color = 'red';
+    } else {
+      strengthText.textContent = '';
+    }
+  }
+
+  function toggleLoginMethod() {
+    const selected = document.querySelector('input[name="loginOption"]:checked').value;
+    document.getElementById('emailLogin').classList.toggle('visible', selected === 'email');
+    document.getElementById('emailLogin').classList.toggle('hidden', selected !== 'email');
+    document.getElementById('phoneLogin').classList.toggle('visible', selected === 'phone');
+    document.getElementById('phoneLogin').classList.toggle('hidden', selected !== 'phone');
+  }
+</script>
+
+{% endblock %}

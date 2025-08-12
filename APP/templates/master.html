@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fontawesome.com/icons/magnifying-glass?f=classic&s=solid">
+    <link rel="shortcut icon" href="{% static 'img/click-cart-logo.jpg' %}" type="image/x-icon">
+    <title>ClickCart - Online Shopping</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+
+<body>
+    <div class="side-menu-bar">
+        <div class="profile">
+            {% if request.session.fullName %}
+            <a href="{% url 'APP:profile' %}"><i class="fa-solid fa-user"></i>
+                <p class="hide-name">{{request.session.fullName | upper}}</p>
+            </a>
+            {% else %}
+            <a href="{% url 'APP:login' %}">Login</a>
+            {% endif %}
+        </div>
+        <hr>
+        <a href="">Super Coin Zone</a>
+        <hr>
+        <a href="{% url 'Products:sellProduct' %}">Sell on clickCart</a>
+        <hr>
+        <a href="">Order</a>
+        <a href="{% url 'APP:profile' %}">Address</a>
+        <a href="{% url 'Products:cartPage' %}">My Cart</a>
+        <hr>
+        <a href="">Help Centre</a>
+        <a href="">Contact</a>
+        <hr>
+        <a href="{% url 'APP:logout' %}">Logout</a>
+    </div>
+    <header id="header">
+        <button class="menu-btn"><i class="fa-solid fa-bars"></i></button>
+        <a href="{% url 'APP:home' %}">
+            <div class="name-logo">
+                <img loading="lazy" src="{% static 'img/click-cart-logo.jpg' %}" alt="click-cart-logo">
+                <h1 class="hide-name">CLiCK<span class="blue">CaRT</span></h1>
+            </div>
+        </a>
+        <form action="{% url 'Products:searchProduct' %}" method="post">
+            <div class="search-icon-input">
+                {% csrf_token %}
+                <input type="search" name="search" id="search" placeholder="Search for products, brands and more">
+                <label for="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </label>
+            </div>
+        </form>
+        <div class="profile-cart">
+            {% if request.session.fullName %}
+            <a href="{% url 'APP:profile' %}" id="profile"><i class="fa-solid fa-user"></i>
+                <p class="hide-name">{{request.session.fullName | upper}}</p>
+            </a>
+            {% else %}
+            <a href="{% url 'APP:login' %}">Login</a>
+            {% endif %}
+            <a href="{% url 'Products:cartPage' %}"><i class="fas fa-heart"></i>
+                <p class="hide-name">Wishlist</p>
+            </a>
+            <a href="{% url 'Products:cartPage' %}"><i class="fa-solid fa-cart-shopping"></i>
+                <p class="hide-name">Cart</p>
+            </a>
+        </div>
+    </header>
+
+    <div class="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="#">Mobiles</a></li>
+                    <li><a href="#">Laptops</a></li>
+                    <li><a href="#">Fashion</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Home & Kitchen</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">Payments</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Report Issue</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Policy</h3>
+                <ul>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Security</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 ClickCart. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        let menuBtn = document.querySelector(".menu-btn");
+        menuBtn.addEventListener("click", () => {
+            let menuSideBar = document.querySelector(".side-menu-bar");
+            console.log("click");
+            if (menuBtn.innerText == 'X')
+                menuBtn.innerText = '☰';
+            else
+                menuBtn.innerText = 'X';
+            menuSideBar.classList.toggle("show");
+        });
+    </script>
+    <script src="{% static 'js/Carousel.js' %}"></script>
+
+
+</body>
+
+</html>

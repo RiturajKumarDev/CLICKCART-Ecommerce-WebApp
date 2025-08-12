@@ -1,0 +1,93 @@
+.container {
+    .fromSavedAddresses {
+        margin-top: 10px;
+        width: 100%;
+        border: 0.5px gray solid;
+        border-radius: 5px;
+        box-shadow: 0 0 5px gray;
+        align-content: center;
+        padding: 20px;
+
+        p {
+            /* background-color: red; */
+            display: inline;
+            font-size: 17px;
+        }
+
+        .changeAddBtn {
+            border: 1px gray solid;
+            color: blue;
+            border-radius: 2px;
+            float: right;
+            display: block;
+            align-content: center;
+            height: 40px;
+            padding: 10px;
+        }
+
+        .selectAdd {
+            border: 0.5px black solid;
+            border-radius: 2px;
+            margin-top: 3px;
+            background-color: white;
+            color: black;
+            width: 100%;
+        }
+    }
+
+    .paymentMethons {
+        margin-top: 10px;
+        min-height: 100px;
+        background-color: #fff;
+        border: 1px gray solid;
+        border-radius: 5px;
+        padding: 20px;
+
+        .cashDelivery,
+        .upiMethod {
+            /* background-color: red; */
+            margin-top: 10px;
+            border: 1px black solid;
+            border-radius: 2px;
+            padding: 7px;
+            display: flex;
+            justify-content: center;
+            /* text-align: center; */
+            align-content: center;
+
+            p {
+                color: green;
+                margin: 5px;
+            }
+
+            ul {
+                margin: 20px auto;
+                padding-left: 20px;
+            }
+
+            label {
+                background-color: yellow;
+                display: flex;
+                /* text-align: center; */
+                justify-content: center;
+            }
+
+            button {
+                background-color: #fb641b;
+                outline: none;
+                border: 1px black solid;
+                border-radius: 2px;
+                width: 170px;
+                padding: 7px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.addressList {
+    margin-top: 30px;
+    width: 100%;
+    transition: transform 0.3s ease;
+    display: none;
+}

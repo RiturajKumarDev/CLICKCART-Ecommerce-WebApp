@@ -1,0 +1,125 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+<div class="container">
+
+    <!-- Left: Sidebar -->
+    <aside class="sidebar">
+        <h3>Account Settings</h3>
+        <ul>
+            <li onclick="showSection('profile2')">Profile Information</li>
+            <li onclick="showSection('address')">Manage Addresses</li>
+            <li onclick="showSection('orders')">Orders</li>
+            <li onclick="showSection('logout')"><a href="{% url 'APP:logout' %}">Logout</a></li>
+        </ul>
+    </aside>
+
+    <!-- Middle: Selected Section Content -->
+    <section class="middle-section">
+        <div id="profile2" class="section active">
+            <h2>Profile Information</h2>
+            <p><strong>Name:</strong> {{user.fullName}}</p>
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Phone:</strong> + 91 {{user.mobile}}</p>
+            <p><strong>Password:</strong> {{user.password | first}}****.... {{user.password | last}}</p>
+        </div>
+
+        <div id="address" class="section">
+            <h2>Manage Addresses</h2>
+            <a href="{% url 'APP:editAddress' %}" class="addBtn">+ ADD A NEW ADDRESS </a>
+            {% for add in address %}
+            <div>
+                <p><strong>{{add.fullName}} : {{add.mobile}}</strong></p>
+                <p>{{add.fullAddress}}</p>
+                <p>{{add.landmark}}</p>
+                <p>{{add.state}}, {{add.cityDistric}}, {{add.pincode}}, {{add.country}}</p>
+                <p>Alternate Phone : {{add.alternateMobile}}</p>
+                <a href="{% url 'APP:editAddress' %}?AddId={{add.AddId}}" class="addBtn">Edit <i
+                        class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{% url 'APP:deleteAddress' %}?AddId={{add.AddId}}" class="addBtn"><i
+                        class="fa-solid fa-trash"></i> Address</a>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+
+        <div id="orders" class="section">
+            <h2>Orders</h2>
+            {% for order in orders %}
+            <p>Order ID : {{order.orderId}} - {{order.orderDate}} | ₹ : {{order.totalPrice}}</p>
+            <p>Payment Status : {{order.paymentStatus}}</p>
+            {% for product in order.myCarts %}
+            <a href="{% url 'Products:productPage' %}?productId={{product.productId}}">
+                <img height="200px" src="{{ product.image }}" alt="image">
+                <p>Quantity : {{product.quantity}} </p>
+                <h3>{{product.productName}} | {{product.productBrand}} </h3>
+                <p>{{product.productTitle}} </p>
+                <p>₹ : {{product.price}}</p>
+            </a>
+            <a style="color: blue;" href="{% url 'Order:trackOrder' %}?trackPathId={{order.trackPath.orderPathId}}">
+                <p style="color: blue;">{{order.trackPath.orderPathId}} : Track Your Order</p>
+            </a>
+            {% endfor %}
+            <hr>
+            {% endfor %}
+        </div>
+
+        <div id="coupons" class="section">
+            <h2>My Coupons</h2>
+            <p>GET50 - 50% OFF</p>
+            <p>FREESHIP - Free Delivery</p>
+        </div>
+
+        <div id="wishlist" class="section">
+            <h2>Wishlist</h2>
+            <p>MacBook Air</p>
+            <p>AirPods Pro</p>
+        </div>
+
+        <div id="logout" class="section">
+            <h2>Logout</h2>
+            <p>You have successfully logged out.</p>
+        </div>
+    </section>
+
+    <!-- Right: Your Account Cards -->
+    <section class="your-account">
+        <h2>Your Account</h2>
+        <div class="card-grid">
+            <div class="card" onclick="showSection('orders')">
+                <h4>Your Orders</h4>
+                <p>Track, return, or buy things again</p>
+            </div>
+            <div class="card">
+                <a href="{% url 'APP:registration' %}?email={{user.email}}">
+                    <h4>Login & Security</h4>
+                    <p>Edit login, name, and mobile number</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="{% url 'APP:editAddress' %}">
+                    <h4>Addresses</h4>
+                    <p>Edit addresses for orders and gifts</p>
+                </a>
+            </div>
+            <div class="card">
+                <h4>Support</h4>
+                <p>Contact us via chat or call</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- JS to Toggle Section in Middle -->
+<script>
+    function showSection(id) {
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.classList.remove('active');
+        });
+        document.getElementById(id).classList.add('active');
+    }
+</script>
+{% endblock %}

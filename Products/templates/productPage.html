@@ -1,0 +1,278 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'productPage.css' %}">
+
+<div class="container">
+    <div class="product_page">
+        <div class="product">
+            <div class="photos">
+                <div class="main-photo">
+                    <img loading="lazy" src="{{ product.images.img1 }}" alt="Main Laptop Image" id="mainImage">
+                </div>
+                <div class="thumbnails">
+                    {% for image in product.images.values %}
+                    <img loading="lazy" src="{{ image }}" alt="Product Image">
+                    {% endfor %}
+                    {% for video in product.videos.values %}
+                    <a href="{{ video }}" target="_main">
+                        <video loading="lazy" src="{{ video }}" alt="Product Image">
+                    </a>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+            <div class="details">
+                <h1>{{product.productName}} | {{product.productBrand}}</h1>
+                <div class="product-description">
+                    {{product.productTitle}} <br>
+                    {{product.fullDetails}}
+                </div>
+                <div class="product-rating">Rating: ★★★★☆ (4.1)</div>
+                <div class="or-line"><span></span></div>
+                <div class="product-price">
+                    ₹{{product.productPrice}} <br>
+                    <span>Inclusive of all taxes<br> EMI starts at ₹2,763.
+                        No Cost EMI available</span>
+                </div>
+
+                <div class="offers">
+                    <div class="cashback">
+                        <h4>Cashback</h4>
+                        <span>Upto ₹1,709.00 cashback as Amazon Pay Balance
+                            when…</span>
+                    </div>
+                    <div class="bank">
+                        <h4>Bank</h4>
+                        <span>Upto ₹2,000.00 discount on select Credit
+                            Cards, HDFC…</span>
+                    </div>
+                    <div class="partner-offer">
+                        <h4>Partner-offer</h4>
+                        <span>ASUS Back to School Offer 1 April- 31 May
+                            2025</span>
+                    </div>
+                </div>
+
+                <div class="services">
+                    <div class="service">
+                        <img loading="lazy"
+                            src="https://tse4.mm.bing.net/th?id=OIP.epyLKQJy-nEiOkokQial9AHaHa&pid=Api&P=0&h=180"
+                            alt="Free Delivery" />
+                        <p>Free Delivery</p>
+                    </div>
+                    <div class="service">
+                        <img loading="lazy"
+                            src="https://tse1.mm.bing.net/th?id=OIP.9UU-q60iXk7YFP192wOh6QHaHa&pid=Api&P=0&h=180"
+                            alt="10 Days Replacement" />
+                        <p>10 Days Replacement</p>
+                    </div>
+                    <div class="service">
+                        <img loading="lazy"
+                            src="https://tse1.mm.bing.net/th?id=OIP.2fEVAS4ojSOQtoyzKv3TeAHaFF&pid=Api&P=0&h=180"
+                            alt="1 Year Warranty" />
+                        <p>1 Year Warranty</p>
+                    </div>
+                    <div class="service">
+                        <img loading="lazy"
+                            src="https://tse4.mm.bing.net/th?id=OIP.WGoZKtYtBGlV1vkNNRz_1gHaHa&pid=Api&P=0&h=180"
+                            alt="Cash/Pay on Delivery" />
+                        <p>Cash/Pay on Delivery</p>
+                    </div>
+                </div>
+
+                <div class="or-line"><span></span></div>
+                <form action="{% url 'Products:cartPage' %}" style="display: hide;" method="post">
+                    <div class="buttons">
+                        {% csrf_token %}
+                        <input type="hidden" name="productId" value="{{product.productId}}">
+                        <button class="cart-btn" type="submit"> Add to Cart</button>
+                        <button class="buy-btn" type="submit">Buy Now</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="product-info">
+            <h2>Product Information</h2>
+            <table>
+                <tbody>
+                    {% for key,feature in product.keysFeatures.items %}
+                    <tr>
+                        <th>{{key}}</th>
+                        <td>{{feature}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="recommended-products">
+            <h2>Recommended Products</h2>
+            <div class="product-carousel">
+                {% for product in products %}
+                <a href="{% url 'Products:productPage' %}?productId={{product.productId }}">
+                    <div class="product-card">
+                        <img loading="lazy" src="{{ product.images.img1 }}" alt="Image 1">
+                        <p class="product-title"> <br>
+                            <b>{{product.productName}} | {{product.productBrand}}</b>
+                            {{product.productTitle}}
+                        </p>
+                        <p class="price">₹{{product.productPrice}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+
+                <div class="product-card">
+                    <img loading="lazy" src="https://m.media-amazon.com/images/I/41hw7I31VjL._AC_.jpg" alt="Product 3">
+                    <p class="product-title">ASUS TUF Gaming A15, AMD Ryzen
+                        7 7435HS, 15.6-inch FHD 144Hz, Gaming Laptop
+                        (16GB/512GB SSD/NVIDIA GeForce</p>
+                    <p class="price">₹82,990</p>
+                </div>
+                <div class="product-card">
+                    <img loading="lazy" src="https://m.media-amazon.com/images/I/41o9eBJQo5L._AC_.jpg" alt="Product 2">
+                    <p class="product-title">HP Victus, 12th Gen Intel Core
+                        i5-12450H, 4GB NVIDIA GeForce RTX 2050 Gaming Laptop
+                        (8GB RAM, 512GB SSD), 144Hz, IPS,</p>
+                    <p class="price">₹58,490</p>
+                </div>
+                <div class="product-card">
+                    <img loading="lazy" src="https://m.media-amazon.com/images/I/414sh5rAmRL._AC_.jpg" alt="Product 3">
+                    <p class="product-title">ASUS TUF Gaming F15, 15.6" FHD
+                        (1920 x 1080) 16:9, 13th Gen Intel Core i7-13620H
+                        Processor 2.4 GHz, Gaming Laptop (16GB..</p>
+                    <p class="price">₹1,04,990</p>
+                </div>
+                <div class="product-card">
+                    <img loading="lazy" src="https://m.media-amazon.com/images/I/41WIlOC9fyL._AC_.jpg" alt="Product 3">
+                    <p class="product-title">MSI Katana A17 AI, AMD 8th Gen.
+                        Ryzen 9 8945HS,Built-in AI, 44CM Laptop(16GB/1TB
+                        NVMe SSD/Windows 11 Home/Nvidia...</p>
+                    <p class="price">₹1,14,990</p>
+                </div>
+                <!-- Add more product cards as needed -->
+            </div>
+            <div class="customer-reviews">
+                <h2>Customer Reviews</h2>
+
+                <div class="overall-rating">
+                    <div class="rating">
+                        <span class="stars">
+                            ★★★★★
+                        </span>
+                        <span class="rating-count">(150 reviews)</span>
+                    </div>
+                    <div class="rating-summary">
+                        <div class="rating-bar">
+                            <div class="rating-bar-fill" style="width: 85%;"></div>
+                            <!-- Change width based on rating -->
+                        </div>
+                        <div class="rating-breakdown">
+                            <span>5 Stars: 85%</span>
+                            <span>4 Stars: 10%</span>
+                            <span>3 Stars: 3%</span>
+                            <span>2 Stars: 1%</span>
+                            <span>1 Star: 1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-list">
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-name">
+                                <strong>John Doe</strong>
+                                <span class="review-date">April 15,
+                                    2025</span>
+                            </div>
+                            <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <p class="review-text">
+                            "This laptop is amazing! I love the performance, especially for gaming. The screen is crisp,
+                            and the battery life is solid. Would highly recommend it!"
+                        </p>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div class="reviewer-name">
+                                <strong>Jane Smith</strong>
+                                <span class="review-date">April 10,
+                                    2025</span>
+                            </div>
+                            <div class="review-rating">⭐⭐⭐⭐</div>
+                        </div>
+                        <p class="review-text">
+                            "Great laptop for the price. The only downside is that it gets a bit hot under load, but
+                            overall a fantastic buy!"
+                        </p>
+                    </div>
+                </div>
+
+                <div class="add-review">
+                    <button class="write-review-btn" onclick="showReviewForm()">Write a Review</button>
+                </div>
+
+                <div class="review-form-container hidden" id="reviewForm">
+                    <button onclick="document.getElementById('reviewForm').classList.add('hidden')">×</button>
+                    <form class="review-form">
+                        <h3>Write a Review</h3>
+
+                        <div class="rating-input">
+                            <label for="rating">Your Rating:</label>
+                            <div class="stars">
+                                <input type="radio" id="star5" name="rating" value="5" />
+                                <label for="star5">★</label>
+                                <input type="radio" id="star4" name="rating" value="4" />
+                                <label for="star4">★</label>
+                                <input type="radio" id="star3" name="rating" value="3" />
+                                <label for="star3">★</label>
+                                <input type="radio" id="star2" name="rating" value="2" />
+                                <label for="star2">★</label>
+                                <input type="radio" id="star1" name="rating" value="1" />
+                                <label for="star1">★</label>
+                            </div>
+                        </div>
+
+                        <div class="textarea-group">
+                            <label for="review">Your Review:</label>
+                            <textarea id="review" name="review" rows="4" placeholder="Write your review here..."
+                                required></textarea>
+                        </div>
+
+                        <button type="submit" class="write-review-btn">Submit
+                            Review</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+    const mainImage = document.getElementById('mainImage');
+
+    thumbnails.forEach(img => {
+        img.addEventListener('click', () => {
+            mainImage.src = img.src;
+        });
+    });
+
+
+    //review
+    function showReviewForm() {
+        const form = document.getElementById('reviewForm');
+        form.classList.remove('hidden');
+
+        // Scroll to bottom where the form appears
+        form.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+
+{% endblock %}

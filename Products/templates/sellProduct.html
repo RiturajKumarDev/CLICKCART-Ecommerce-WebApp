@@ -1,0 +1,108 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'sellProduct.css' %}">
+<div class="container">
+
+    <h1 style="text-align: center;">Enter Product Details</h1>
+    <div class="form">
+        <form action="{% url 'Products:sellProduct' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 style="text-align: left;">Basic Details</h2>
+            <hr>
+            <div class="product-details">
+                <div class="details">
+                    <p>Product Type</p>
+                    <input type="text" name="productType" id="detail" placeholder="Product Type" required>
+                </div>
+                <div class="details">
+                    <p>Product Name</p>
+                    <input type="text" name="productName" id="detail" placeholder="Product Name" required>
+                </div>
+                <div class="details">
+                    <p>Product Price</p>
+                    <input type="number" name="productPrice" id="detail" placeholder="Product Price" required>
+                </div>
+                <div class="details">
+                    <p>Product Title</p>
+                    <input type="text" name="productTitle" id="detail" placeholder="Product Title" required>
+                </div>
+                <div class="details">
+                    <p>Product Brand</p>
+                    <input type="text" name="productBrand" id="detail" placeholder="Product Brand" required>
+                </div>
+                <div class="details">
+                    <p>Product Work</p>
+                    <input type="text" name="productWork" id="detail" placeholder="Product Work" required>
+                </div>
+                <textarea name="fullDetails" id="" placeholder="Product Details ..." required></textarea>
+            </div>
+            <div class="imgs-btn">
+                <h2 style="text-align: left;">Image's</h2>
+                <hr>
+                <div class="imgs">
+                    <label class="img" for="img1">
+                        <input type="file" name="img1" id="img1" required accept="images/*">
+                        <p>Upload Main-image</p>
+                    </label>
+                    <label class="img" for="img2">
+                        <input type="file" name="img2" id="img2" required accept="images/*">
+                        <p>Upload image</p>
+                    </label>
+                    <label class="img" for="img3">
+                        <input type="file" name="img3" id="img3" required accept="images/*">
+                        <p>Upload image</p>
+                    </label>
+                    <label class="img" for="img4">
+                        <input type="file" name="img4" id="img4" required accept="images/*">
+                        <p>Upload image</p>
+                    </label>
+                </div>
+                <input class="add-more" value="+ Add more image" type="button" onclick="addMoreImage()">
+            </div>
+            <div class="vids-btn">
+                <h2 style="text-align: left;">Video's</h2>
+                <hr>
+                <div class="vids">
+                    <label class="vid" for="vid1">
+                        <input type="file" name="vid1" id="vid1" accept="video/*">
+                        <p>Upload Video</p>
+                    </label>
+                </div>
+                <input class="add-more" type="button" value="+ Add more video" onclick="addMoreVid()">
+            </div>
+            <div class="keysfeatures">
+                <h2 style="text-align: left;">Keys & Feature</h2>
+                <hr>
+                <div class="keys-features">
+                    <div class="key-feature">
+                        <input type="text" name="key1" class="key1" placeholder="Key" required><br>
+                        <input type="text" name="feature1" class="feature1" placeholder="Feature" required>
+                    </div>
+                    <div class="key-feature">
+                        <input type="text" name="key2" class="key2" placeholder="Key" required><br>
+                        <input type="text" name="feature2" class="feature2" placeholder="Feature" required>
+                    </div>
+                    <div class="key-feature">
+                        <input type="text" name="key3" class="key3" placeholder="Key" required><br>
+                        <input type="text" name="feature3" class="feature3" placeholder="Feature" required>
+                    </div>
+                    <div class="key-feature">
+                        <input type="text" name="key4" class="key4" placeholder="Key" required><br>
+                        <input type="text" name="feature4" class="feature4" placeholder="Feature" required>
+                    </div>
+                </div>
+                <input class="add-more" type="button" value="+ Add more Key Feature" onclick="addMoreKeyFeature()">
+            </div>
+            <hr>
+            <button type="submit" class="btn">Upload Product</button>
+            <button type="reset" class="btn">Reset</button>
+        </form>
+    </div>
+
+</div>
+<script src="{% static 'js/sellProduct.js' %}"></script>
+
+
+{% endblock %}

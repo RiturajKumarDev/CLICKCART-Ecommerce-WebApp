@@ -1,0 +1,179 @@
+.container {
+    margin-top: 20px;
+    background-color: wheat;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px black;
+
+    form {
+        text-align: center;
+
+        /* background-color: red; */
+        .product-details {
+            /* background-color: red; */
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+
+            .details {
+                background-color: var(--main-bg-color);
+                margin: 10px;
+                padding: 5px;
+                text-align: center;
+                border: 2px black solid;
+                border-radius: 7px;
+
+                input {
+                    outline: none;
+                    border: 0.5px black solid;
+                    border-radius: 2px;
+                    padding: 5px;
+                }
+
+            }
+
+            textarea {
+                outline: none;
+                border: 0.5px black solid;
+                border-radius: 10px;
+                padding: 5px;
+                width: 95%;
+                height: 250px;
+                font-weight: 900;
+                font-size: 18px;
+                font-family: 'Times New Roman', Times, serif;
+                margin: 10px;
+            }
+        }
+
+        .keysfeatures {
+            margin-top: 20px;
+            text-align: center;
+
+            .keys-features {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+
+                .key-feature {
+                    background-color: var(--main-bg-color);
+                    margin: 10px;
+                    padding: 5px;
+                    border: 2px black solid;
+                    border-radius: 7px;
+
+                    input {
+                        outline: none;
+                        border: 0.5px black solid;
+                        border-radius: 2px;
+                        padding: 5px;
+                        margin: 5px;
+                    }
+
+                }
+            }
+
+            .add-more {
+                background-color: var(--main-bg-color);
+                border: 2px black solid;
+                border-radius: 10px;
+                align-content: center;
+                text-align: center;
+                height: 50px;
+                width: 200px;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .imgs-btn {
+            /* background-color: green; */
+            margin-top: 20px;
+            text-align: center;
+
+            .imgs {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+
+                .img {
+                    background-color: var(--main-bg-color);
+                    border: 2px black solid;
+                    border-radius: 5px;
+                    align-content: center;
+                    text-align: center;
+                    margin: 10px;
+                    padding: 5px;
+                    cursor: pointer;
+
+                    input {
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .add-more {
+                background-color: var(--main-bg-color);
+                border: 2px black solid;
+                border-radius: 10px;
+                align-content: center;
+                text-align: center;
+                height: 50px;
+                width: 200px;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .vids-btn {
+            /* background-color: green; */
+            margin-top: 20px;
+            text-align: center;
+
+            .vids {
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+
+                .vid {
+                    background-color: var(--main-bg-color);
+                    border: 2px black solid;
+                    border-radius: 5px;
+                    align-content: center;
+                    text-align: center;
+                    margin: 10px;
+                    padding: 5px;
+                    cursor: pointer;
+
+                    input {
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .add-more {
+                background-color: var(--main-bg-color);
+                border: 2px black solid;
+                border-radius: 10px;
+                align-content: center;
+                text-align: center;
+                height: 50px;
+                width: 200px;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
+
+        .btn {
+            background-color: var(--main-bg-color);
+            border-radius: 5px;
+            border: 2px solid black;
+            margin: 10px auto;
+            width: 150px;
+            height: 50px;
+        }
+    }
+}

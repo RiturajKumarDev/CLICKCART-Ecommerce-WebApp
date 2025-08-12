@@ -1,0 +1,169 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'order.css' %}">
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="{% static 'cartPage.css' %}">
+<style>
+    .ordering {
+        display: none;
+    }
+</style>
+<div class="container">
+
+    <div class="carts">
+        {% for cart in mycart %}
+        <div class="cartProducts">
+            <a href="{% url 'Products:productPage' %}?productId={{cart.product.productId }}">
+                <div class="cartProduct" data-brand="{{cart.product.productBrand}}"
+                    data-price="{{cart.product.productPrice}}" data-rating="4.3" data-processor="Amd-Ryzen">
+                    <div class="images">
+                        <div class="image">
+                            <img loading="lazy" src="{{ cart.product.images.img1 }}" alt="Image 1">
+                        </div>
+                    </div>
+                    <div class="result">
+                        <div class="product-name">{{cart.product.productName}} | {{cart.product.productBrand}}</div>
+                        <div class="product-description"> {{cart.product.productTitle}} <br>
+                        </div>
+                        <div class="product-rating">Rating: ★★★★☆ (4.3)</div>
+                        <div class="product-price">₹{{cart.product.productPrice}}</div>
+                    </div>
+                </div>
+            </a>
+
+            <div class="buttons">
+                <div class="manage">
+                    <a href="{% url 'Products:discartCart' %}?cartId={{cart.cartId }}" class="decreament"> - </a>
+                    <span class="noOfProduct"> {{cart.noOfProduct}} </span>
+                    <a href="{% url 'Products:addCart' %}?cartId={{cart.cartId }}" class="increament"> + </a>
+                </div>
+                <div class="oneCartPrice">
+                    <input type="hidden" class="AllsinglePrice" value="{{cart.price}}">
+                    {{cart.product.productPrice}} x {{cart.noOfProduct}} = ₹ {{cart.price}}
+                </div>
+                <a href="{% url 'Products:deleteCart' %}?cartId={{cart.cartId }}" class="remove"> REMOVE </a>
+
+                <button class="showOrding">ORDER</button>
+                <p id="{{cart.cartId}}" class="{{cart.price}}"></p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="placeOrder">
+            <div class="form">
+                <h3 class="totalPrice">Total : ₹ 00.00 </h3>
+                <button class="showOrding">PLACE ORDER</button>
+                <p style="display: none;" id="tPrice" class=""></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ordering">
+        <div class="fromSavedAddresses">
+            <p>From Saved Addresses</p>
+            <button style="margin-left: 2px;" class="changeAddBtn" onclick="ChangeAddress()">Change Address</button>
+            <a class="changeAddBtn" href="{% url 'APP:editAddress' %}">+ ADD A NEW ADDRESS </a>
+            <div class="addressList">
+                {% for add in address %}
+                <button class="selectAdd" id="{{add.AddId}}">
+                    <p><strong>{{add.fullName}} : {{add.mobile}}</strong></p>,
+                    <p>{{add.fullAddress}}</p>,
+                    <p>{{add.landmark}}</p>,
+                    <p>{{add.state}}, {{add.cityDistric}}, {{add.pincode}}, {{add.country}}</p>,
+                    <p>Alternate Phone : {{add.alternateMobile}}</p>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="paymentMethons">
+            <h2 class="priceOrder">Select Your Payments Method : ₹ </h2>
+            <div class="upiMethod">
+                <form action="{% url 'Order:placedOrder' %}" method="post">
+                    {% csrf_token %}
+                    <p>Pay by Online Payments</p>
+                    <ul>
+                        <li>UPI app</li>
+                        <li>Credit & Debit Cards</li>
+                        <li>Digital Wallets (e-Wallets)</li>
+                        <li>Bank Transfers</li>
+                        <li>Mobile Payment Apps</li>
+                        <li>Net Baning</li>
+                    </ul>
+                    <input type="hidden" name="payment" value="YES">
+                    <input type="hidden" name="cartId" class="cartId">
+                    <input type="hidden" name="price" class="price">
+                    <input type="hidden" name="addressId" class="addressId" value="{{add.AddId}}" required>
+                    <button>Place Order</button>
+                </form>
+            </div>
+
+            <div class="cashDelivery">
+                <p>A ₹10 non-Refundable free is charged to help cover handling costs for cash on delivery orders.</p>
+                <form action="{% url 'Order:placedOrder' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="payment" value="NO">
+                    <input type="hidden" name="cartId" class="cartId">
+                    <input type="hidden" name="price" class="price">
+                    <input type="hidden" name="addressId" class="addressId" value="{{add.AddId}}" required>
+                    <button type="submit">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let AllsinglePrice = document.querySelectorAll(".AllsinglePrice");
+    let totalPrice = Number();
+    AllsinglePrice.forEach(singlePrice => {
+        totalPrice += Number(singlePrice.value);
+    });
+    document.querySelector(".totalPrice").innerText = "Total : ₹ " + totalPrice;
+    document.querySelector("#tPrice").className = totalPrice;
+</script>
+
+
+<script>
+    function ChangeAddress() {
+        let addressList = document.querySelector(".addressList");
+        addressList.classList.toggle("show");
+    }
+
+    let selectAdd = document.querySelectorAll(".selectAdd");
+    selectAdd.forEach(btn => {
+        btn.style.backgroundColor = "white";
+        btn.addEventListener('click', () => {
+            selectAdd.forEach(b => b.style.backgroundColor = "white");
+            btn.style.backgroundColor = "green";
+            let addressIds = document.querySelectorAll(".addressId");
+            addressIds[0].value = btn.id;
+            addressIds[1].value = btn.id;
+            ChangeAddress();
+        });
+    });
+</script>
+
+<script>
+    let showOrding = document.querySelectorAll(".showOrding");
+    showOrding.forEach((orderPage) => {
+        orderPage.addEventListener("click", () => {
+            let id = orderPage.nextElementSibling.id;
+            let price = orderPage.nextElementSibling.className;
+            document.querySelectorAll(".cartId").forEach((c) => {
+                c.value = id;
+            });
+            document.querySelectorAll(".price").forEach((p) => {
+                p.value = price;
+            });
+            document.querySelector(".priceOrder").textContent = `Select Your Payments Method : ₹ ${price}`;
+            document.querySelector(".carts").style.display = "none";
+            document.querySelector(".ordering").style.display = "block";
+        });
+    });
+</script>
+
+{% endblock %}

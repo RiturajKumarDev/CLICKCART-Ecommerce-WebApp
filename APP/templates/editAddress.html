@@ -1,0 +1,125 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'editAddress.css' %}">
+
+<div class="container">
+    <h2>Enter Delivery Address</h2>
+    <button class="btn" id="btn"> <i class="fa-solid fa-location-crosshairs"></i> Use my current location</button><br>
+    <form id="address-form" action="{% url 'APP:editAddress' %}" method="post">
+        {% csrf_token %}
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" value="{{address.fullName}}" placeholder="FullName" required>
+
+        <div class="phone">
+            <div>
+                <label for="phone">Mobile Number</label>
+                <input type="tel" id="phone" name="phone" value="{{address.mobile}}" pattern="[0-9]{10}" required placeholder="10-digit number">
+            </div>
+            <div>
+                <label for="phone">Alternate Phone (Optional)</label>
+                <input type="tel" id="phone" name="alternateMobile" value="{{address.alternateMobile}}" pattern="[0-9]{10}" required
+                    placeholder="10-digit number">
+            </div>
+        </div>
+
+        <label for="pincode">Pincode</label>
+        <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" value="{{address.pincode}}" placeholder="Pincode" required>
+
+        <label for="address">Address (House No, Street,
+            Area)</label>
+        <textarea id="address" id="address" name="fullAddress" rows="3" placeholder="Address (House No, Street,Area)"
+            required>{{address.fullAddress}}</textarea>
+
+        <label for="landmark">Landmark (Optional)</label>
+        <input type="text" id="landmark" value="{{address.landmark}}" placeholder="Landmark (Optional)" name="landmark" required>
+
+        <label for="city">City/District/Town</label>
+        <input type="text" id="city" name="city" value="{{address.cityDistric}}" placeholder="City/District/Town" required>
+
+        <label for="state">State</label>
+        <select id="state" name="state" required>
+            <option value>--Select State or Union
+                Territory--</option>
+
+            <optgroup label="States">
+                <option value="Andhra Pradesh">Andhra
+                    Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal
+                    Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal
+                    Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya
+                    Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+            </optgroup>
+
+            <optgroup label="Union Territories">
+                <option value="Andaman and Nicobar Islands">Andaman
+                    and Nicobar Islands</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra
+                    and Nagar Haveli and Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Jammu and Kashmir">Jammu and
+                    Kashmir</option>
+                <option value="Ladakh">Ladakh</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Puducherry">Puducherry</option>
+            </optgroup>
+        </select>
+
+        <label for="country">Country</label>
+        <input type="text" id="country" value="{{address.country}}" name="country" placeholder="Country" required>
+
+        <button type="submit">Save Address</button>
+    </form>
+</div>
+
+<script>
+    btn.addEventListener("click", () => {
+        // console.log("click");
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords;
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+            fetch(url).then(res => res.json()).then(data => {
+                // console.table(data.address);
+                let temp = data.address;
+                document.querySelector("#pincode").value = temp['postcode'];
+                document.querySelector("#city").value = (temp['city'] || temp['town'] || temp['village'] || "N/A");
+                document.querySelector("#state").value = temp['state'];
+                document.querySelector("#country").value = temp['country'];
+                document.querySelector("#address").value = temp['city_district'] + ", " + (temp['city'] || temp['town'] || temp['village'] || "N/A");
+            }).catch(() => {
+                console.log("Error fetching data from API");
+            });
+        });
+    });
+
+</script>
+
+{% endblock %}

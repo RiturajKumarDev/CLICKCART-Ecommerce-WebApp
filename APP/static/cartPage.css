@@ -1,0 +1,246 @@
+.fromSavedAddresses {
+    /* background-color: green; */
+    width: 100%;
+    /* height: 70px; */
+    border: 0.5px gray solid;
+    border-radius: 5px;
+    box-shadow: 0 0 5px gray;
+    align-content: center;
+    padding: 20px;
+
+    p {
+        /* background-color: red; */
+        display: inline;
+        font-size: 17px;
+    }
+
+    a {
+        border: 1px gray solid;
+        color: blue;
+        border-radius: 2px;
+        float: right;
+        display: block;
+        align-content: center;
+        height: 40px;
+        padding: 10px;
+    }
+}
+
+
+.cartProducts {
+    margin-top: 20px;
+    border: 1px black solid;
+    border-radius: 5px;
+
+    a {
+        .cartProduct {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            color: #000;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+            /* height: 10vh; */
+
+
+            .images {
+                width: 30%;
+
+                .image {
+                    width: 100%;
+                    height: 200px;
+                    background-color: #444;
+                    border-radius: 8px;
+                    background-image: url('https://via.placeholder.com/300x180?text=Product');
+                    background-size: cover;
+                    background-position: center;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: 8px;
+                    }
+                }
+            }
+
+            .result {
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .product-name {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                    color: #000;
+                }
+
+                .product-price {
+                    font-size: 1.5rem;
+                    color: #000;
+                    margin-bottom: 5px;
+                }
+
+                .product-description {
+                    font-size: 0.9rem;
+                    color: #000;
+                    margin-bottom: 15px;
+                }
+
+
+                .product-rating {
+                    font-size: 0.9rem;
+                    color: #06f125;
+                    margin-bottom: 15px;
+                }
+            }
+
+        }
+    }
+
+    .buttons {
+        /* background-color: yellow; */
+        min-height: 70px;
+        border-radius: 5px;
+        align-content: center;
+        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .manage {
+            margin: 2px;
+
+            a {
+                margin: 5px;
+                display: inline-block;
+                border: 1px black solid;
+                text-align: center;
+                border-radius: 100%;
+                height: 20px;
+                width: 20px;
+                font-weight: 900;
+                font-weight: bold;
+            }
+
+            .noOfProduct {
+                border: 0.5px black solid;
+                border-radius: 2px;
+                display: inline-block;
+                width: 35px;
+                text-align: center;
+                padding: 2px;
+            }
+        }
+
+        .remove,
+        .oneCartPrice {
+            margin: 2px;
+            border: 0.5px black solid;
+            width: 120px;
+            border-radius: 2px;
+            padding: 5px;
+            height: 30px;
+            float: center;
+        }
+
+        .oneCartPrice {
+            width: auto;
+        }
+
+        button {
+            margin: 2px;
+            outline: none;
+            border: 0.5px black solid;
+            border-radius: 2px;
+            padding: 5px;
+            width: 150px;
+            background-color: #fb641b;
+            text-align: center;
+            align-content: center;
+            height: 30px;
+        }
+    }
+}
+
+.placeOrder {
+    background-color: green;
+    margin-top: 5px;
+    min-height: 80px;
+    border: 0.5px gray solid;
+    border-radius: 5px;
+    box-shadow: 0 0 5px gray;
+    align-content: center;
+    position: sticky;
+    bottom: 1px;
+    z-index: 1;
+    background-color: white;
+    padding: 20px;
+
+    .form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .totalPrice {
+            margin: 2px;
+            border: 0.5px gray solid;
+            border-radius: 3px;
+            padding: 10px;
+        }
+
+        button {
+            border: 0.5px black solid;
+            border-radius: 2px;
+            padding: 10px;
+            width: 250px;
+            font-size: 18px;
+            background-color: #fb641b;
+        }
+    }
+}
+
+@media screen and (max-width: 760px) {
+    a {
+        .cartProduct {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0.75rem 1rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            margin-bottom: 1rem;
+            gap: 1rem;
+
+            .images {
+                width: 35%;
+                min-width: 120px;
+
+                .image {
+                    width: 100%;
+                    height: 120px;
+                    overflow: hidden;
+                    border-radius: 8px;
+                    background-color: #f4f4f4;
+                    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        display: block;
+                        padding: 4px;
+                    }
+                }
+            }
+        }
+    }
+}

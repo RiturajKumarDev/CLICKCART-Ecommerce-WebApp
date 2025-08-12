@@ -1,0 +1,282 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<!-- Categories Bar -->
+<div class="categories">
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Mobile">
+            <div class="category-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <span class="category-name">Mobiles</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=watch">
+            <div class="category-icon">
+                <i class="material-icons" style="font-size:36px">watch</i>
+            </div>
+            <span class="category-name">Watchs</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Laptop">
+            <div class="category-icon">
+                <i class="fas fa-laptop"></i>
+            </div>
+            <span class="category-name">Laptops</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Cloth">
+            <div class="category-icon">
+                <i class="fas fa-tshirt"></i>
+            </div>
+            <span class="category-name">Fashion</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="">
+            <div class="category-icon">
+                <i class="fas fa-home"></i>
+            </div>
+            <span class="category-name">Home</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Electronic">
+            <div class="category-icon">
+                <i class="fas fa-tv"></i>
+            </div>
+            <span class="category-name">Electronics</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Book">
+            <div class="category-icon">
+                <i class="fas fa-book"></i>
+            </div>
+            <span class="category-name">Books</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Grocerie">
+            <div class="category-icon">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <span class="category-name">Groceries</span>
+        </a>
+    </div>
+    <div class="category">
+        <a href="{% url 'Products:searchProduct' %}?search=Game">
+            <div class="category-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <span class="category-name">Games</span>
+        </a>
+    </div>
+</div>
+
+<!-- Hero Carousel -->
+<div class="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item">
+            <img loading="lazy" src="{% static 'img/934044814._CB551384116_.jpg' %}" alt="Summer Sale" />
+        </div>
+        <div class="carousel-item">
+            <img loading="lazy" src="{% static 'img/af_pc_2x._CB792409181_.jpg' %}" alt="New Smartphones" />
+        </div>
+        <div class="carousel-item">
+            <img loading="lazy" src="{% static 'img/PC_Hero_2x-toys_1._CB582765723_.jpg' %}" alt="Electronics Deals" />
+        </div>
+        <div class="carousel-item">
+            <img loading="lazy" src="{% static 'img/TallHero_3000X1200_Unrec._CB593464763_.jpg' %}"
+                alt="Electronics Deals" />
+        </div>
+    </div>
+    <button class="carousel-control prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-control next"><i class="fas fa-chevron-right"></i></button>
+    <div class="carousel-indicators">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+</div>
+
+<!-- Deals of the Day -->
+<section class="deals-section">
+    <div class="section-header">
+        <h2 class="section-title">Deals of the Day</h2>
+        <!-- <div class="timer">23:59:59 Left</div> -->
+    </div>
+    <div class="products-grid">
+        {% for product in productsFirstRow %}
+        <a href="{% url 'Products:productPage' %}?productId={{product.productId }}" target="_main">
+            <div class="product-card">
+                <div class="product-image">
+                    <img loading="lazy" src="{{ product.images.img1 }}" alt="Smartphone" />
+                    <div class="discount-badge">50% OFF</div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{product.productName}} | {{product.productBrand}}<br>
+                        {{product.productTitle}}</h3>
+                    <div class="product-price">₹{{product.productPrice}} <span
+                            class="original-price">₹9{{product.productPrice}}99</span></div>
+                    <div class="rating">★★★★☆ (4.2)</div>
+                    <h2>
+
+                    </h2>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+<!-- ========== TRENDING PRODUCTS SECTION (5 ITEMS) ========== -->
+<section class="deals-section">
+    <div class="section-header">
+        <h2 class="section-title">Trending Now</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="products-grid">
+        <!-- Product 1 -->
+        {% for product in productsSecondRow %}
+        <a href="{% url 'Products:productPage' %}?productId={{product.productId }}">
+            <div class="product-card">
+                <div class="product-image">
+                    <img loading="lazy" src="{{ product.images.img1 }}" alt="Smartphone" />
+                    <div class="discount-badge">50% OFF</div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{product.productName}} | {{product.productBrand}}<br>
+                        {{product.productTitle}}</h3>
+                    <div class="product-price">₹{{product.productPrice}} <span
+                            class="original-price">₹{{product.productPrice}}99</span></div>
+                    <div class="rating">★★★★☆ (4.2)</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+
+        <!-- <div class="product-card">
+            <div class="product-image">
+                <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1600003263720-95b45a4035d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80"
+                    alt="Tablet" />
+                <div class="discount-badge">NEW</div>
+            </div>
+            <div class="product-details">
+                <h3 class="product-title">10" Tablet with Stylus</h3>
+                <div class="product-price">₹32,999</div>
+                <div class="rating">★★★★★ (4.8)</div>
+            </div>
+        </div> -->
+
+    </div>
+</section>
+
+<!-- ========== FASHION SECTION (5 ITEMS) ========== -->
+<section class="deals-section" style="background-color: #fff9f9;">
+
+    <div class="products-grid">
+        <!-- Product 1 -->
+        {% for product in productsThirdRow %}
+        <a href="{% url 'Products:productPage' %}?productId={{product.productId }}">
+            <div class="product-card">
+                <div class="product-image">
+                    <img loading="lazy" src="{{ product.images.img1 }}" alt="Smartphone" />
+                    <div class="discount-badge">50% OFF</div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{product.productName}} | {{product.productBrand}}<br>
+                        {{product.productTitle}}</h3>
+                    <div class="product-price">₹{{product.productPrice}} <span
+                            class="original-price">₹{{product.productPrice}}99</span></div>
+                    <div class="rating">★★★★☆ (4.2)</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+
+        <!-- Product 2 -->
+        <!-- <div class="product-card">
+            <div class="product-image">
+                <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80"
+                    alt="Watch" />
+            </div>
+            <div class="product-details">
+                <h3 class="product-title">Luxury Chronograph Watch</h3>
+                <div class="product-price">₹12,499</div>
+                <div class="rating">★★★★★ (4.7)</div>
+            </div>
+        </div> -->
+
+
+    </div>
+</section>
+
+<!-- ========== ELECTRONICS SECTION (5 ITEMS) ========== -->
+<section class="deals-section" style="background-color: #f0f9ff;">
+
+    <div class="products-grid">
+        <!-- Product 1 -->
+        {% for product in productsFourthRow %}
+        <a href="{% url 'Products:productPage' %}?productId={{product.productId }}">
+            <div class="product-card">
+                <div class="product-image">
+                    <img loading="lazy" src="{{ product.images.img1 }}" alt="Smartphone" />
+                    <div class="discount-badge">50% OFF</div>
+                </div>
+                <div class="product-details">
+                    <h3 class="product-title">{{product.productName}} | {{product.productBrand}}<br>
+                        {{product.productTitle}}</h3>
+                    <div class="product-price">₹{{product.productPrice}} <span
+                            class="original-price">₹{{product.productPrice}}99</span></div>
+                    <div class="rating">★★★★☆ (4.2)</div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+
+        <!-- Product 2 -->
+        <!-- <div class="product-card">
+            <div class="product-image">
+                <img loading="lazy"
+                    src="https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80"
+                    alt="Wireless Earbuds" />
+            </div>
+            <div class="product-details">
+                <h3 class="product-title">Noise Cancelling Earbuds</h3>
+                <div class="product-price">₹5,999</div>
+                <div class="rating">★★★★☆ (4.3)</div>
+            </div>
+        </div> -->
+
+    </div>
+</section>
+
+<!-- Top Offers -->
+<section class="deals-section">
+    <div class="section-header">
+        <h2 class="section-title">Top Offers</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="products-grid">
+        <!-- Repeat product cards for offers -->
+    </div>
+</section>
+
+<!-- Fashion Deals -->
+<section class="deals-section">
+    <div class="section-header">
+        <h2 class="section-title">Fashion Deals</h2>
+        <a href="#" class="view-all">View All</a>
+    </div>
+    <div class="products-grid">
+        <!-- Repeat product cards for fashion -->
+    </div>
+</section>
+
+{% endblock %}

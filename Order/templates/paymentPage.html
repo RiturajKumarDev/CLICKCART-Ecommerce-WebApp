@@ -1,0 +1,121 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<style>
+    .success-box {
+        margin: 50px auto;
+        font-family: 'Poppins', sans-serif;
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 40px 30px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        color: #333;
+
+
+        .tick {
+            font-size: 60px;
+            color: #00e676;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        p {
+            font-size: 15px;
+            margin-bottom: 12px;
+            background: #f2f2f2;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .btn {
+            background: #00c853;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: #009624;
+        }
+    }
+</style>
+<div class="container">
+    <div class="success-box">
+        <div class="tick">✅</div>
+        <h2>Pay Amounts!</h2>
+        <p><strong>Amount : </strong> ₹ {{showAmount}}</p>
+        <button id="pay-btn" class="btn">Pay Now</button>
+    </div>
+</div>
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{razorpay_key}}",
+        "amount": "{{amount}}",
+        "currency": "INR",
+        "name": "Buying stuff",
+        "description": "Purchase things",
+        "order_id": "{{order_id}}",
+        "orderId": "{{orderId}}",
+        "handler": function (response) {
+            console.log("Paytemt successful : ", response);
+            fetch("/success", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}",
+                },
+                body: new URLSearchParams({
+                    "orderId": "{{orderId}}",
+                    "amount": "{{amount}}",
+                    "razorpay_payment_id": response.razorpay_payment_id,
+                    "razorpay_order_id": response.razorpay_order_id,
+                    "razorpay_signature": response.razorpay_signature,
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error("Server verification failed.");
+                    }
+                })
+                .then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                })
+                .catch(error => console.error("Payment reques failed", error));
+        },
+        "theme": { "color": "#00bfff" }
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById("pay-btn").onclick = function (e) {
+        // console.log("click");
+        rzp1.open();
+        e.preventDefault();
+    };
+</script>
+
+
+{% endblock %}

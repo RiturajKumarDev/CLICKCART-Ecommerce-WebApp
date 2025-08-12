@@ -1,0 +1,51 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'orderTrack.css' %}">
+<div class="container">
+
+    <div class="tarckOrderPath">
+        <h1>Your Order Track ... </h1>
+        <h2>Order ID : {{orderPath.order.orderId}} </h2>
+        <div class="connectPath">
+            <div class="allDates">
+                <span class="confirmPoint"></span>
+                <p>Order Confirm <br> {{orderPath.confirmDate}} </p>
+            </div>
+            <div class="allDates">
+                <span class="shippedPoint"></span>
+                <p>Order Shipped <br> {{orderPath.shippedDate}} </p>
+            </div>
+            <div class="allDates">
+                <span class="outOfDeliveryPoint"></span>
+                <p>Out Of Delivery <br> {{orderPath.outOfDeliveryDate}} </p>
+            </div>
+            <div class="allDates">
+                <span class="deliveredPoint"></span>
+                <p>Delivered : {{orderPath.deliveredDate}} </p>
+            </div>
+            {% if orderPath.cancelledDate %}
+            <div class="allDates">
+                <span class="cenclePoint"></span>
+                <p>Cancle : {{orderPath.cancelledDate}}</p>
+            </div>
+            {% endif %}
+            {% if orderPath.returnDate %}
+            <div class="allDates">
+                <span class="returnPoint"></span>
+                <p>Return : {{orderPath.returnDate}}</p>
+            </div>
+            {% endif %}
+            {% if orderPath.refundDate %}
+            <div class="allDates">
+                <span class="refundPoint"></span>
+                <p>Refund : {{orderPath.refundDate}}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
